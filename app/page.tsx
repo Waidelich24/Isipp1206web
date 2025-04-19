@@ -273,7 +273,7 @@ export default function Home() {
                   >
                     <Button
                       className="mt-6 bg-primary text-white hover:bg-primary/90 hover-vibrate"
-                      onClick={() => scrollToSection("inscripciones")}
+                      onClick={() => scrollToSection("Contacto")}
                     >
                       Contacto
                     </Button>
@@ -510,7 +510,7 @@ export default function Home() {
 
         {/* Registration Form Section */}
         <motion.section
-          id="inscripciones"
+          id="Contacto"
           className="section-gradient-1 py-24 dark:bg-zinc-800"
           initial="hidden"
           whileInView="visible"
