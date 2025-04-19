@@ -273,7 +273,7 @@ export default function Home() {
                   >
                     <Button
                       className="mt-6 bg-primary text-white hover:bg-primary/90 hover-vibrate"
-                      onClick={() => scrollToSection("Contacto")}
+                      onClick={() => scrollToSection("inscripciones")}
                     >
                       Contacto
                     </Button>
@@ -541,7 +541,7 @@ export default function Home() {
         </motion.section>
 
         {/* Map Section */}
-        <section id="contacto">
+        <section id="ubicacion">
           <MapSection />
         </section>
 
