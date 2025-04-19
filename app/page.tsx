@@ -356,7 +356,7 @@ export default function Home() {
                   >
                     <Button
                       className="mt-6 bg-primary text-white hover:bg-primary/90 hover-vibrate"
-                      onClick={() => scrollToSection("contacto")}
+                      onClick={() => scrollToSection("Contacto")}
                     >
                       Contacto
                     </Button>
@@ -412,7 +412,7 @@ export default function Home() {
                   >
                     <Button
                       className="mt-6 bg-primary text-white hover:bg-primary/90 hover-vibrate"
-                      onClick={() => scrollToSection("contacto")}
+                      onClick={() => scrollToSection("Contacto")}
                     >
                       Contacto
                     </Button>
@@ -581,7 +581,7 @@ export default function Home() {
                   <Button
                     size="lg"
                     className="bg-white text-primary hover:bg-white/90 glow-border"
-                    onClick={() => scrollToSection("contacto")}
+                    onClick={() => scrollToSection("Contacto")}
                   >
                     Contacto
                   </Button>
