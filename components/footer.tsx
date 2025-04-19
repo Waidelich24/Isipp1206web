@@ -132,7 +132,7 @@ export function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin className="mr-2 h-5 w-5 shrink-0 text-primary" />
-                <span className="text-muted-foreground">Av. Ejemplo 1234, Puerto Piray, Misiones, Argentina</span>
+                <span className="text-muted-foreground">Calle sarmiento, Puerto Piray, Misiones, Argentina</span>
               </li>
               <li className="flex items-center">
                 <Phone className="mr-2 h-5 w-5 shrink-0 text-primary" />
