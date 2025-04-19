@@ -11,7 +11,7 @@ import { Footer } from "@/components/footer"
 import { MapSection } from "@/components/map-section"
 import { FlipCard } from "@/components/flip-card"
 import { useSmoothScroll } from "@/hooks/use-smooth-scroll"
-
+import SocialBubble from '@/components/SocialBubble'; // Ajusta la ruta si es necesario
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollToSection } = useSmoothScroll()
@@ -116,7 +116,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-
+      <SocialBubble />
       <motion.div key="main-content" initial={{ opacity: 1 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
         {/* Hero Section */}
         <section id="inicio" ref={heroRef} className="relative h-screen w-full overflow-hidden">
