@@ -661,7 +661,7 @@ const careers = [
       "Administración de servidores",
       "Seguridad informática y ciberseguridad",
       "Virtualización y cloud computing",
-      "Certificaciones internacionales disponibles",
+      "Alcance internacional, certificaciones",
     ],
     sectionId: "redes",
   },
