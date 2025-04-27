@@ -60,27 +60,37 @@ export function Header({}: HeaderProps) {
     }, 150)
   }
 
-  const handleNavClick = (e: React.MouseEvent, sectionId?: string, action?: () => void) => {
-    if (action) {
-      e.preventDefault()
-      action()
-      setActiveDropdown(null)
-      return
+  const handleNavClick = (e: React.MouseEvent, sectionId?: string, action?: () => void, href?: string) => {
+    // Cierra el dropdown
+    setActiveDropdown(null);
+  
+    if (href) {
+      // Si hay un href, se redirige (sin interferir con scrollToSection)
+      e.preventDefault();
+      router.push(href);  // Usando Next.js router para navegación
+      return;
     }
-
+  
+    // Si hay una sección, se hace scroll
     if (sectionId) {
-      e.preventDefault()
-      scrollToSection(sectionId)
-      setActiveDropdown(null)
+      e.preventDefault();
+      scrollToSection(sectionId);
+    }
+  
+    // Ejecuta acción si es que hay una
+    if (action) {
+      e.preventDefault();
+      action();
     }
   }
-
+  
   // Variantes de animación para los elementos del menú
   const menuItemVariants = {
     initial: { opacity: 0, y: -5, transition: { duration: 0.2 } },
     animate: { opacity: 1, y: 0, transition: { duration: 0.2 } },
     exit: { opacity: 0, y: -5, transition: { duration: 0.2 } },
   }
+  
 
   // Variantes para el dropdown
   const dropdownVariants = {
@@ -117,31 +127,24 @@ export function Header({}: HeaderProps) {
 
   // Crear navItems con la opción de autoridades
   const navItems: NavItem[] = [
-    { label: "Inicio", href: "/#inicio", sectionId: "inicio" },
-    {
-      label: "Carreras",
-      href: "/#carreras",
-      sectionId: "carreras",
-      children: [
+    { label: "Inicio", href: "/", sectionId: "inicio" },
+    { label: "Carreras", href: "#", sectionId: "carreras", children: [
         {
           label: "Analista de Sistemas de Computación",
-          href: "/#sistemas",
-          sectionId: "sistemas",
+          href: "/sistemas",
           description: "Desarrollo de software y sistemas de información",
         },
         {
-          label: "Tec. Redes",
-          href: "/#redes",
-          sectionId: "redes",
+          label: "Tecnicatura en Redes",
+          href: "/redes",
           description: "Infraestructura y comunicaciones",
         },
         {
-          label: "Tec. Seguridad e Higiene",
-          href: "/#seguridad",
-          sectionId: "seguridad",
+          label: "Tecnicatura en Seguridad e Higiene",
+          href: "/seguridad",
           description: "Prevención de riesgos laborales",
-        },
-      ],
+        }
+      ]
     },
     {
       label: "Institucional",
@@ -153,8 +156,8 @@ export function Header({}: HeaderProps) {
 
   return (
     <motion.header
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-        isScrolled ? "bg-zinc-900/90 py-2 shadow-md backdrop-blur-sm dark:bg-zinc-900/90" : "bg-transparent py-4"
+    className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+      isScrolled ? "bg-zinc-900/90 py-2 shadow-md backdrop-blur-sm dark:bg-zinc-900/90" : "bg-transparent py-4"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -269,7 +272,7 @@ export function Header({}: HeaderProps) {
           >
             <Button
               className={`bg-primary text-white hover:bg-primary/90 ${isScrolled ? "border-primary" : "border-white"}`}
-              onClick={(e) => handleNavClick(e, "Contacto")}
+              onClick={(e) => handleNavClick(e, "inscripciones")}
             >
               Contacto
             </Button>
@@ -314,7 +317,7 @@ export function Header({}: HeaderProps) {
                 ))}
                 <Button
                   className="bg-primary text-white hover:bg-primary/90"
-                  onClick={(e) => handleNavClick(e, "Contacto")}
+                  onClick={(e) => handleNavClick(e, "inscripciones")}
                 >
                   Contacto
                 </Button>

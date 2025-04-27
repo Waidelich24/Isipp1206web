@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowLeft } from "lucide-react"
 import { useSmoothScroll } from "@/hooks/use-smooth-scroll"
+import { useRouter } from "next/navigation"
 
 type Career = {
   title: string
@@ -26,17 +27,18 @@ export function FlipCard({ career, index }: FlipCardProps) {
   const [isFlipped, setIsFlipped] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const { scrollToSection } = useSmoothScroll()
+  const router = useRouter()
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped)
   }
-
   const handleViewMore = (e: React.MouseEvent) => {
     e.preventDefault()
     if (career.sectionId) {
-      scrollToSection(career.sectionId)
+      router.push(`/${career.sectionId}`)
     }
   }
+  
 
   // Variantes para la animación de entrada
   const cardVariants = {

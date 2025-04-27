@@ -32,7 +32,7 @@ Sitio desarrollado con **Next.js 14** y **Tailwind CSS**, enfocado en ofrecer un
 
 Proyecto iniciado y estructurado por:
 
-**Gabriel Agustín Torres** | Desarrollador principal
+**Gabriel Agustín Torres** | Como colaborador principal **Angel Agustín Waidelich**
 
 Colaboración abierta a estudiantes y docentes interesados en:
 

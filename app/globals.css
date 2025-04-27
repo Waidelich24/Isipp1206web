@@ -82,6 +82,14 @@
   .rotate-y-180 {
     transform: rotateY(180deg);
   }
+  .glow-text-tight {
+    /* Brillo contenido y pegado al contorno de la letra */
+    text-shadow:
+      0 0 1px rgba(255, 255, 255, 0.8),
+      0 0 2px rgba(255, 255, 255, 0.6),
+      0 0 4px rgba(123, 63, 97, 0.6),
+      0 0 6px rgba(123, 63, 97, 0.4);
+  }
 }
 
 @keyframes pulse-intense {

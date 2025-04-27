@@ -120,86 +120,85 @@ export default function Home() {
       <motion.div key="main-content" initial={{ opacity: 1 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
         {/* Hero Section */}
         <section id="inicio" ref={heroRef} className="relative h-screen w-full overflow-hidden">
-          <motion.div className="absolute inset-0 z-0" style={{ y, scale }}>
-            <Image
-              src="/fondoisipp.png"
-              alt="ISIPP Building"
-              fill
-              className="object-cover object-center"
-              priority
-              quality={100}
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/70 mix-blend-multiply" />
-          </motion.div>
+  {/* Aquí se mantiene la animación del fondo */}
+  <motion.div className="absolute inset-0 z-0" style={{ y, scale }}>
+    <Image
+      src="/fondoisipp.png"
+      alt="ISIPP Building"
+      fill
+      className="object-cover object-center"
+      priority
+      quality={100}
+    />
+    <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/70 mix-blend-multiply" />
+  </motion.div>
 
-          <motion.div
-            className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center"
-            style={{ opacity }}
+  {/* La animación que solo aplica a las secciones visibles */}
+  <motion.div
+    className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center"
+    style={{ opacity }}
+  >
+    <motion.h1
+      className="font-playfair text-4xl font-bold tracking-tight text-white md:text-6xl glow-text"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+    >
+      ISIPP 1206
+    </motion.h1>
+    <motion.p
+      className="mt-4 font-playfair text-xl text-white md:text-2xl"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.2 }}
+    >
+      Tradición, Conocimiento y Futuro
+    </motion.p>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.4 }}
+      className="mt-8"
+    >
+      {/* Botón de acción */}
+      <div className="relative overflow-hidden rounded-md group animate-pulse-intense">
+        <div className="absolute inset-0 bg-primary/30 backdrop-blur-sm group-hover:bg-primary/40 transition-colors duration-300"></div>
+
+        <motion.div
+          className="absolute inset-0 w-[200%] h-full animate-shimmer-primary"
+          animate={{
+            x: ["-100%", "100%"],
+          }}
+          transition={{
+            duration: 2.5,
+            ease: "easeInOut",
+            repeat: Number.POSITIVE_INFINITY,
+            repeatType: "loop",
+          }}
+        />
+
+        <div className="absolute inset-0 rounded-md glow-border"></div>
+
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          className="hover-vibrate"
+        >
+          <Button
+            className="relative bg-transparent hover:bg-transparent px-8 py-3 text-white border border-white/50 z-10 font-bold"
+            size="lg"
+            onClick={() => scrollToSection("carreras")}
           >
-            <motion.h1
-              className="font-playfair text-4xl font-bold tracking-tight text-white md:text-6xl glow-text"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              ISIPP 1206
-            </motion.h1>
-            <motion.p
-              className="mt-4 font-playfair text-xl text-white md:text-2xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              Tradición, Conocimiento y Futuro
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="mt-8"
-            >
-              <div className="relative overflow-hidden rounded-md group animate-pulse-intense">
-                {/* Fondo animado con color primario */}
-                <div className="absolute inset-0 bg-primary/30 backdrop-blur-sm group-hover:bg-primary/40 transition-colors duration-300"></div>
+            <span className="relative z-10 text-white glow-text">Conocé nuestras carreras</span>
+          </Button>
+        </motion.div>
+      </div>
+    </motion.div>
+  </motion.div>
+</section>
 
-                {/* Efecto de luz que se mueve con color primario */}
-                <motion.div
-                  className="absolute inset-0 w-[200%] h-full animate-shimmer-primary"
-                  animate={{
-                    x: ["-100%", "100%"],
-                  }}
-                  transition={{
-                    duration: 2.5,
-                    ease: "easeInOut",
-                    repeat: Number.POSITIVE_INFINITY,
-                    repeatType: "loop",
-                  }}
-                />
 
-                {/* Borde brillante */}
-                <div className="absolute inset-0 rounded-md glow-border"></div>
-
-                {/* Botón real */}
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  className="hover-vibrate"
-                >
-                  <Button
-                    className="relative bg-transparent hover:bg-transparent px-8 py-3 text-white border border-white/50 z-10 font-bold"
-                    size="lg"
-                    onClick={() => scrollToSection("carreras")}
-                  >
-                    <span className="relative z-10 text-white glow-text">Conocé nuestras carreras</span>
-                  </Button>
-                </motion.div>
-              </div>
-            </motion.div>
-          </motion.div>
-        </section>
-
-        {/* Careers Section */}
         <motion.section
           id="carreras"
           className="section-gradient-2 py-24 dark:bg-zinc-900"
@@ -226,215 +225,6 @@ export default function Home() {
           </div>
         </motion.section>
 
-        {/* Detailed Career Sections */}
-        <motion.section
-          id="sistemas"
-          className="section-gradient-1 py-24 dark:bg-zinc-800"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={sectionVariants}
-        >
-          <div className="container px-4 md:px-6">
-            <div className="mx-auto max-w-4xl">
-              <motion.h2
-                className="font-playfair text-3xl font-bold tracking-tight md:text-4xl text-center mb-12 text-primary"
-                variants={itemVariants}
-              >
-                Analista de Sistemas de Computación
-              </motion.h2>
-
-              <motion.div className="grid gap-8 md:grid-cols-2 items-center" variants={containerVariants}>
-                <motion.div variants={itemVariants}>
-                  <h3 className="text-xl font-semibold mb-4">Formación integral en desarrollo de software</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Estudiar para analista de sistemas en computación te brinda una formación completa en el desarrollo
-                    de software, bases de datos, redes y sistemas de información, preparándote para liderar proyectos
-                    tecnológicos en empresas de cualquier tamaño.
-                  </p>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <span className="mr-2 text-primary">•</span>
-                      <span>Duración: 3 años</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2 text-primary">•</span>
-                      <span>Título oficial con validez nacional</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2 text-primary">•</span>
-                      <span>Prácticas profesionales en empresas del sector</span>
-                    </li>
-                  </ul>
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  >
-                    <Button
-                      className="mt-6 bg-primary text-white hover:bg-primary/90 hover-vibrate"
-                      onClick={() => scrollToSection("Contacto")}
-                    >
-                      Contacto
-                    </Button>
-                  </motion.div>
-                </motion.div>
-                <motion.div
-                  className="relative h-[300px] md:h-[400px] rounded-lg overflow-hidden shadow-xl"
-                  variants={imageVariants}
-                  whileHover="hover"
-                >
-                  <Image
-                    src="/informatica.png?height=800&width=600"
-                    alt="Estudiantes de Análisis de Sistemas"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent mix-blend-overlay"></div>
-                </motion.div>
-              </motion.div>
-            </div>
-          </div>
-        </motion.section>
-
-        <motion.section
-          id="redes"
-          className="section-gradient-2 py-24 dark:bg-zinc-900"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={sectionVariants}
-        >
-          <div className="container px-4 md:px-6">
-            <div className="mx-auto max-w-4xl">
-              <motion.h2
-                className="font-playfair text-3xl font-bold tracking-tight md:text-4xl text-center mb-12 text-primary"
-                variants={itemVariants}
-              >
-                Tecnicatura en Redes
-              </motion.h2>
-
-              <motion.div className="grid gap-8 md:grid-cols-2 items-center" variants={containerVariants}>
-                <motion.div
-                  className="order-2 md:order-1 relative h-[300px] md:h-[400px] rounded-lg overflow-hidden shadow-xl"
-                  variants={imageVariants}
-                  whileHover="hover"
-                >
-                  <Image
-                    src="/pararede.webp?height=800&width=600"
-                    alt="Estudiantes de Redes"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent mix-blend-overlay"></div>
-                </motion.div>
-                <motion.div className="order-1 md:order-2" variants={itemVariants}>
-                  <h3 className="text-xl font-semibold mb-4">Especialización en infraestructuras de comunicación</h3>
-                  <p className="text-muted-foreground mb-4">
-                    La Tecnicatura en Redes te prepara para diseñar, implementar y mantener infraestructuras de redes y
-                    sistemas de comunicación empresarial, con un enfoque práctico y orientado a las necesidades del
-                    mercado.
-                  </p>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <span className="mr-2 text-primary">•</span>
-                      <span>Configuración de redes LAN, WAN y WLAN</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2 text-primary">•</span>
-                      <span>Administración de servidores</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2 text-primary">•</span>
-                      <span>Alcance internacional, certificaciones</span>
-                    </li>
-                  </ul>
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  >
-                    <Button
-                      className="mt-6 bg-primary text-white hover:bg-primary/90 hover-vibrate"
-                      onClick={() => scrollToSection("Contacto")}
-                    >
-                      Contacto
-                    </Button>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
-            </div>
-          </div>
-        </motion.section>
-
-        <motion.section
-          id="seguridad"
-          className="section-gradient-1 py-24 dark:bg-zinc-800"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={sectionVariants}
-        >
-          <div className="container px-4 md:px-6">
-            <div className="mx-auto max-w-4xl">
-              <motion.h2
-                className="font-playfair text-3xl font-bold tracking-tight md:text-4xl text-center mb-12 text-primary"
-                variants={itemVariants}
-              >
-                Tecnicatura en Seguridad e Higiene Laboral
-              </motion.h2>
-
-              <motion.div className="grid gap-8 md:grid-cols-2 items-center" variants={containerVariants}>
-                <motion.div variants={itemVariants}>
-                  <h3 className="text-xl font-semibold mb-4">Formación en prevención de riesgos laborales</h3>
-                  <p className="text-muted-foreground mb-4">
-                    La Tecnicatura en Seguridad e Higiene Laboral te brinda una formación especializada en prevención de
-                    riesgos laborales, normativas de seguridad y gestión de entornos de trabajo saludables.
-                  </p>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <span className="mr-2 text-primary">•</span>
-                      <span>Normativas nacionales e internacionales</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2 text-primary">•</span>
-                      <span>Gestión ambiental y sustentabilidad</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2 text-primary">•</span>
-                      <span>Prácticas profesionales en empresas</span>
-                    </li>
-                  </ul>
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  >
-                    <Button
-                      className="mt-6 bg-primary text-white hover:bg-primary/90 hover-vibrate"
-                      onClick={() => scrollToSection("Contacto")}
-                    >
-                      Contacto
-                    </Button>
-                  </motion.div>
-                </motion.div>
-                <motion.div
-                  className="relative h-[300px] md:h-[400px] rounded-lg overflow-hidden shadow-xl"
-                  variants={imageVariants}
-                  whileHover="hover"
-                >
-                  <Image
-                    src="/tecseg.png?height=800&width=600"
-                    alt="Estudiantes de Seguridad e Higiene"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent mix-blend-overlay"></div>
-                </motion.div>
-              </motion.div>
-            </div>
-          </div>
-        </motion.section>
 
         {/* Institutional Section */}
         <motion.section
@@ -510,7 +300,7 @@ export default function Home() {
 
         {/* Registration Form Section */}
         <motion.section
-          id="Contacto"
+          id="inscripciones"
           className="section-gradient-1 py-24 dark:bg-zinc-800"
           initial="hidden"
           whileInView="visible"
@@ -541,7 +331,7 @@ export default function Home() {
         </motion.section>
 
         {/* Map Section */}
-        <section id="ubicacion">
+        <section id="contacto">
           <MapSection />
         </section>
 
@@ -581,7 +371,7 @@ export default function Home() {
                   <Button
                     size="lg"
                     className="bg-white text-primary hover:bg-white/90 glow-border"
-                    onClick={() => scrollToSection("Contacto")}
+                    onClick={() => scrollToSection("inscripciones")}
                   >
                     Contacto
                   </Button>
@@ -661,7 +451,7 @@ const careers = [
       "Administración de servidores",
       "Seguridad informática y ciberseguridad",
       "Virtualización y cloud computing",
-      "Alcance internacional, certificaciones",
+      "Certificaciones internacionales disponibles",
     ],
     sectionId: "redes",
   },

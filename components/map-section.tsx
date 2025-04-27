@@ -31,7 +31,7 @@ export function MapSection() {
         >
           <div className="relative aspect-video w-full overflow-hidden bg-gray-200">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.0168878895483!2d-58.38375908417525!3d-34.60373446500075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccac630121623%3A0x53386f2ac88991a9!2sTeatro%20Col%C3%B3n!5e0!3m2!1sen!2sar!4v1649260914259!5m2!1sen!2sar"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3540.123456789012!2d-54.713166!3d-26.4687552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDI4JzA3LjUiUyA1NMKwNDInNDcuNCJX!5e0!3m2!1sen!2sar!4v1234567890123!5m2!1sen!2sar"
               width="100%"
               height="100%"
               style={{ border: 0 }}
