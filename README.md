@@ -41,7 +41,7 @@ Colaboración abierta a estudiantes y docentes interesados en:
 - Mejora del diseño UX/UI
 - Ampliación de funcionalidades
 
- las tareas se gestionan mediante GitHub y se revisan antes de integrarse en la rama principal.
+ las tareas se gestionan mediante GitHub y se revisan antes de integrarse a la rama principal.
 
 ---
 
