@@ -19,7 +19,6 @@ interface ScheduleCalendarProps {
   className?: string;
 }
 
-// Lista de colores pastel/claros en formato Tailwind
 const lightColorClasses = [
   'bg-blue-100/70 dark:bg-blue-900/50 border-blue-200 dark:border-blue-700 text-blue-800 dark:text-blue-200',
   'bg-green-100/70 dark:bg-green-900/50 border-green-200 dark:border-green-700 text-green-800 dark:text-green-200',
@@ -33,7 +32,6 @@ const lightColorClasses = [
   'bg-amber-100/70 dark:bg-amber-900/50 border-amber-200 dark:border-amber-700 text-amber-800 dark:text-amber-200',
 ];
 
-// Función para obtener un color único para cada materia
 const useColorAssignment = (events: ScheduleEvent[]) => {
   return useMemo(() => {
     const colorMap = new Map<string, string>();
@@ -42,10 +40,7 @@ const useColorAssignment = (events: ScheduleEvent[]) => {
 
     events.forEach(event => {
       if (!colorMap.has(event.materia)) {
-        // Buscar el primer color disponible que no esté en uso
         let selectedColor = availableColors.find(color => !usedColors.has(color));
-        
-        // Si todos los colores están en uso, empezar a reutilizar desde el principio
         if (!selectedColor) {
           selectedColor = availableColors[0];
         }
@@ -71,14 +66,7 @@ export default function ScheduleCalendar({
   
   const calculateStartHour = (events: ScheduleEvent[]) => {
     if (events.length === 0) return 8;
-    
-    const earliestTime = Math.min(
-      ...events.map(event => {
-        const [hh] = event.inicio.split(":").map(Number);
-        return hh;
-      })
-    );
-    
+    const earliestTime = Math.min(...events.map(event => Number(event.inicio.split(":")[0])));
     return Math.max(earliestTime - 1, 0);
   };
 
@@ -104,17 +92,18 @@ export default function ScheduleCalendar({
 
   return (
     <div className={`overflow-auto rounded-lg border border-border shadow-sm bg-background ${className}`}>
-      <div className="flex min-w-max bg-card">
+      <div className="flex min-w-full">
+        
         {/* Columna de horas */}
-        <div className="sticky left-0 z-0 bg-muted border-r border-border">
+        <div className="z-0 sticky left-0 bg-muted border-r border-border shrink-0 w-20">
           <div className="h-12 border-b border-border flex items-center justify-end pr-3 font-bold text-foreground">
             Hora
           </div>
           {hours.map((hour) => (
-            <div 
+            <div
               key={hour}
               className="flex items-end justify-end pr-2 text-sm text-muted-foreground bg-card"
-              style={{ 
+              style={{
                 height: `${hourHeight}px`,
                 borderBottom: "1px solid hsl(var(--border))"
               }}
@@ -124,10 +113,10 @@ export default function ScheduleCalendar({
           ))}
         </div>
 
-        {/* Grid principal */}
-        <div className="flex-1 overflow-auto">
-          <div className="grid grid-cols-5 relative">
-            {/* Encabezados de días */}
+        {/* Contenedor scrollable horizontal (CORREGIDO) */}
+        <div className="overflow-x-auto relative min-w-full">
+          <div className="grid grid-cols-5 relative min-w-[600px]">
+            {/* Encabezados */}
             {days.map((day) => (
               <div
                 key={day}
@@ -137,15 +126,14 @@ export default function ScheduleCalendar({
               </div>
             ))}
 
-            {/* Contenedor de celdas */}
-            <div 
+            {/* Eventos y líneas de horario */}
+            <div
               className="col-span-5 relative"
               style={{
                 height: `${(endHour - startHour) * hourHeight}px`,
                 gridColumn: "1 / span 5"
               }}
             >
-              {/* Líneas horizontales de guía */}
               {hours.map((hour) => (
                 <div
                   key={`line-${hour}`}
@@ -153,10 +141,9 @@ export default function ScheduleCalendar({
                   style={{
                     top: `${(hour - startHour) * hourHeight}px`
                   }}
-                ></div>
+                />
               ))}
 
-              {/* Eventos */}
               {events.map((event, idx) => {
                 const top = calculatePosition(event.inicio);
                 const height = calculateHeight(event.inicio, event.fin);
@@ -168,7 +155,7 @@ export default function ScheduleCalendar({
                     key={`${event.dia}-${event.inicio}-${idx}`}
                     className={`absolute rounded-md border ${colorClass} shadow-sm p-2 mx-1 overflow-hidden flex flex-col hover:shadow-md transition-shadow`}
                     style={{
-                      left: `${(col - 1) * 20}%`,
+                      left: `calc(${(col - 1) * 20}% + 0.25rem)`,
                       width: '18%',
                       top: `${top}px`,
                       height: `${height}px`,
@@ -176,9 +163,7 @@ export default function ScheduleCalendar({
                     }}
                   >
                     <div className="flex-grow overflow-hidden">
-                      <h3 className="font-semibold text-sm leading-tight truncate">
-                        {event.materia}
-                      </h3>
+                      <h3 className="font-semibold text-sm leading-tight truncate">{event.materia}</h3>
                       <div className="text-xs opacity-80 mt-1">
                         {event.inicio} - {event.fin}
                       </div>

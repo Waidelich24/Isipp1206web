@@ -32,14 +32,7 @@ export function Footer() {
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
               </Link>
-              <Link href="#" className="text-muted-foreground transition-colors hover:text-primary">
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
-              </Link>
-              <Link href="#" className="text-muted-foreground transition-colors hover:text-primary">
-                <Linkedin className="h-5 w-5" />
-                <span className="sr-only">LinkedIn</span>
-              </Link>
+
             </div>
           </div>
 
@@ -98,31 +91,28 @@ export function Footer() {
             <h3 className="mb-4 font-playfair text-xl font-bold">Carreras</h3>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="/#sistemas"
-                  onClick={(e) => handleLinkClick(e, "sistemas")}
-                  className="text-muted-foreground transition-colors hover:text-primary hover:underline cursor-pointer"
-                >
-                  Tec. Análisis de Sistemas
-                </a>
+              <Link
+                href="/sistemas"
+                className="text-muted-foreground transition-colors hover:text-primary hover:underline cursor-pointer"
+              >
+                Tec. Análisis de Sistemas
+              </Link>
               </li>
               <li>
-                <a
-                  href="/#redes"
-                  onClick={(e) => handleLinkClick(e, "redes")}
-                  className="text-muted-foreground transition-colors hover:text-primary hover:underline cursor-pointer"
-                >
-                  Tec. Redes
-                </a>
+              <Link
+                href="/redes"
+                className="text-muted-foreground transition-colors hover:text-primary hover:underline cursor-pointer"
+              >
+                Tec. Redes
+              </Link>
               </li>
               <li>
-                <a
-                  href="/#seguridad"
-                  onClick={(e) => handleLinkClick(e, "seguridad")}
-                  className="text-muted-foreground transition-colors hover:text-primary hover:underline cursor-pointer"
-                >
-                  Tec. Seguridad e Higiene Laboral
-                </a>
+              <Link
+                href="/seguridad"
+                className="text-muted-foreground transition-colors hover:text-primary hover:underline cursor-pointer"
+              >
+                Tec. Superior en Seguridad e Higiene Laboral
+              </Link>
               </li>
             </ul>
           </div>
@@ -132,11 +122,11 @@ export function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin className="mr-2 h-5 w-5 shrink-0 text-primary" />
-                <span className="text-muted-foreground">Av. Ejemplo 1234, Puerto Piray, Misiones, Argentina</span>
+                <span className="text-muted-foreground">Calle Juan Manuel de Rosas, Puerto Piray, Misiones, Argentina</span>
               </li>
               <li className="flex items-center">
                 <Phone className="mr-2 h-5 w-5 shrink-0 text-primary" />
-                <span className="text-muted-foreground">+54 11 4567-8900</span>
+                <span className="text-muted-foreground">+54 3751 444222</span>
               </li>
               <li className="flex items-center">
                 <Mail className="mr-2 h-5 w-5 shrink-0 text-primary" />

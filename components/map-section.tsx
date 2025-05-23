@@ -49,7 +49,7 @@ export function MapSection() {
             viewport={{ once: true }}
           >
             <h3 className="font-playfair text-xl font-semibold">Instituto Superior ISIPP 1206</h3>
-            <p className="mt-2 text-muted-foreground">Puerto Piray, Misiones, Argentina – Calle Sarmiento</p>
+            <p className="mt-2 text-muted-foreground">Puerto Piray, Misiones, Argentina – Calle Juan Manuel de Rosas</p>
             <div className="mt-4 flex flex-wrap gap-4">
               <motion.div
                 initial={{ opacity: 0, x: -10 }}

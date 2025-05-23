@@ -66,7 +66,7 @@ export default function SeguridadPage() {
       <SeguridadRequisitosVision className="section-gradient-2 dark:bg-card" />
       <SeguridadScheduleFragment className="bg-background dark:bg-popover" />
       <CorrelativasVisual 
-        carreraId="seguridad" 
+        carreraId="higiene" 
         className="perspective-1000" 
       />
       <Footer />

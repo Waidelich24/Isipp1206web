@@ -146,12 +146,19 @@ export function Header({}: HeaderProps) {
         }
       ]
     },
+{
+  label: "Institucional",
+  href: "#",
+  sectionId: undefined,
+  children: [
     {
-      label: "Institucional",
-      href: "/#institucional",
-      sectionId: "institucional",
-      children: [{ label: "Misión y Visión", href: "/#mision", sectionId: "mision" }],
+      label: "Historia",
+      href: "#historia-horizontal",
+      sectionId: "historia-horizontal",
     },
+  ],
+},
+
   ]
 
   return (

@@ -1,9 +1,9 @@
 "use client"
-
+import DonationSection from "@/components/sections/donations/DonationSection";
 import Image from "next/image"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
-
+import { ChevronDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button"
 import { ContactForm } from "@/components/contact-form"
 import { Header } from "@/components/header"
@@ -12,6 +12,8 @@ import { MapSection } from "@/components/map-section"
 import { FlipCard } from "@/components/flip-card"
 import { useSmoothScroll } from "@/hooks/use-smooth-scroll"
 import SocialBubble from '@/components/SocialBubble'; // Ajusta la ruta si es necesario
+import { ResponsiveTimeline } from '@/components/sections/timegalery/ResponsiveTimeline'
+import { Chatbot } from '@/components/chatbot/chatbot';
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollToSection } = useSmoothScroll()
@@ -116,88 +118,92 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
+
       <SocialBubble />
       <motion.div key="main-content" initial={{ opacity: 1 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-        {/* Hero Section */}
-        <section id="inicio" ref={heroRef} className="relative h-screen w-full overflow-hidden">
-  {/* Aquí se mantiene la animación del fondo */}
-  <motion.div className="absolute inset-0 z-0" style={{ y, scale }}>
-    <Image
-      src="/fondoisipp.png"
-      alt="ISIPP Building"
-      fill
-      className="object-cover object-center"
-      priority
-      quality={100}
-    />
-    <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/70 mix-blend-multiply" />
+{/* Hero Section - Versión Reorganizada */}
+<section id="inicio" ref={heroRef} className="relative h-screen w-full overflow-hidden">
+  {/* Video de fondo */}
+  <motion.div 
+    className="absolute inset-0 z-0 flex items-center justify-center bg-black"
+    style={{ y, scale }}
+  >
+    <video
+      autoPlay
+      muted
+      loop
+      playsInline
+      disablePictureInPicture
+      className="h-auto w-auto min-h-full min-w-full object-cover"
+      poster="/fallback-hero.png"
+    >
+      <source src="/videos/hero-bg.mp4" type="video/mp4" />
+      Tu navegador no soporta el video.
+    </video>
+    <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/80" />
   </motion.div>
 
-  {/* La animación que solo aplica a las secciones visibles */}
-  <motion.div
-    className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center"
-    style={{ opacity }}
-  >
-    <motion.h1
-      className="font-playfair text-4xl font-bold tracking-tight text-white md:text-6xl glow-text"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-    >
-      ISIPP 1206
-    </motion.h1>
-    <motion.p
-      className="mt-4 font-playfair text-xl text-white md:text-2xl"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.2 }}
-    >
-      Tradición, Conocimiento y Futuro
-    </motion.p>
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.4 }}
-      className="mt-8"
-    >
-      {/* Botón de acción */}
-      <div className="relative overflow-hidden rounded-md group animate-pulse-intense">
-        <div className="absolute inset-0 bg-primary/30 backdrop-blur-sm group-hover:bg-primary/40 transition-colors duration-300"></div>
+  {/* Contenido */}
+  <motion.div className="relative z-10 h-full flex flex-col justify-between" style={{ opacity }}>
+    
+    {/* Parte superior: título y subtítulo */}
+    <div className="pt-40 text-center">
+      <motion.h1
+        className="font-playfair text-4xl font-bold text-white sm:text-5xl md:text-6xl glow-text"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        ISIPP 1206
+      </motion.h1>
 
-        <motion.div
-          className="absolute inset-0 w-[200%] h-full animate-shimmer-primary"
-          animate={{
-            x: ["-100%", "100%"],
-          }}
-          transition={{
-            duration: 2.5,
-            ease: "easeInOut",
-            repeat: Number.POSITIVE_INFINITY,
-            repeatType: "loop",
-          }}
-        />
+      <motion.p
+        className="mt-2 font-playfair text-xl text-white md:text-2xl lg:text-3xl px-4"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+      >
+        Tradición, Conocimiento y Futuro
+      </motion.p>
+    </div>
 
-        <div className="absolute inset-0 rounded-md glow-border"></div>
-
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          className="hover-vibrate"
-        >
+    {/* Parte inferior: botón */}
+    <div className="mb-24 flex justify-center">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.6 }}
+      >
+        <div className="relative overflow-hidden rounded-lg group">
+          <div className="absolute inset-0 bg-primary/30 backdrop-blur-sm" />
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/30 to-transparent w-[200%]"
+            animate={{ x: ["-100%", "100%"] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+          />
           <Button
-            className="relative bg-transparent hover:bg-transparent px-8 py-3 text-white border border-white/50 z-10 font-bold"
-            size="lg"
+            className="relative h-12 px-8 text-lg font-semibold text-white bg-transparent hover:bg-transparent"
             onClick={() => scrollToSection("carreras")}
+            aria-label="Conocé nuestras carreras"
           >
-            <span className="relative z-10 text-white glow-text">Conocé nuestras carreras</span>
+            <span className="glow-text">Conocé nuestras carreras</span>
+            <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Button>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
+    </div>
+
+    {/* Flecha scroll */}
+    <motion.div
+      className="absolute bottom-4 left-1/2 -translate-x-1/2"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1.5 }}
+    >
+      <ChevronDown className="h-8 w-8 animate-bounce text-white/80" />
     </motion.div>
   </motion.div>
 </section>
-
 
         <motion.section
           id="carreras"
@@ -226,77 +232,7 @@ export default function Home() {
         </motion.section>
 
 
-        {/* Institutional Section */}
-        <motion.section
-          id="institucional"
-          className="relative overflow-hidden section-gradient-2 py-24 dark:bg-zinc-950"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={sectionVariants}
-        >
-          <div className="container relative z-10 px-4 md:px-6">
-            <div className="grid items-center gap-12 lg:grid-cols-2">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-              >
-                <h2 className="font-playfair text-3xl font-bold tracking-tight md:text-4xl text-primary">
-                  Nuestra Institución
-                </h2>
-                <p className="mt-4 text-lg text-muted-foreground">
-                  Con más de 30 años de trayectoria, ISIPP 1206 se ha consolidado como una institución de referencia en
-                  la formación de profesionales técnicos.
-                </p>
-                <div id="mision" className="mt-8 space-y-4">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    viewport={{ once: true }}
-                  >
-                    <h3 className="font-playfair text-xl font-semibold text-primary">Misión</h3>
-                    <p className="mt-2 text-muted-foreground">
-                      Formar profesionales técnicos con sólidos conocimientos, valores éticos y compromiso social,
-                      capaces de responder a las demandas del mercado laboral actual.
-                    </p>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    viewport={{ once: true }}
-                  >
-                    <h3 className="font-playfair text-xl font-semibold text-primary">Visión</h3>
-                    <p className="mt-2 text-muted-foreground">
-                      Ser reconocidos como una institución educativa de excelencia, referente en la formación técnica
-                      profesional, que contribuye al desarrollo sostenible de la sociedad.
-                    </p>
-                  </motion.div>
-                </div>
-              </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="relative h-[600px] overflow-hidden rounded-lg shadow-xl"
-                whileHover={{ scale: 1.03 }}
-              >
-                <Image
-                  src="/parawebinstituto.jpg?height=800&width=600"
-                  alt="ISIPP Students"
-                  fill
-                  className="object-cover transition-transform duration-10000 ease-in-out hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent mix-blend-overlay"></div>
-              </motion.div>
-            </div>
-          </div>
-        </motion.section>
 
         {/* Registration Form Section */}
         <motion.section
@@ -380,6 +316,60 @@ export default function Home() {
             </div>
           </div>
         </motion.section>
+
+    
+
+<ResponsiveTimeline
+  id="historia-horizontal"
+  events={[
+    {
+      year: "1988-1989",
+      title: "Fundación del Instituto",
+      description: "El Instituto tuvo sus inicios en 1988 de forma experimental y fue oficialmente reconocido en 1989 por el Consejo General de Educación (CGE) como una institución privada adscripta teniendo a José Luis Farruggia como el primer directivo.",
+      image: {
+        src: "/Isipp_imagenes/fundacion.jpg",
+        alt: "Edificio original del instituto"
+      }
+    },
+    {
+      year: "1993",
+      title: "Cambio de dependencia",
+      description: "Pasó a depender del Servicio Provincial de Enseñanza Privada de Misiones (SPEPM), marcando un nuevo capítulo en nuestra administración.",
+      image: {
+        src: "/Isipp_imagenes/primeros_alumnos.jpg",
+        alt: "Documento de cambio de dependencia"
+      }
+    },
+    {
+      year: "1997",
+      title: "Ampliación de la carrera",
+      description: "Se amplió la duración de la carrera principal a 3 años, permitiendo una formación más completa y especializada para nuestros estudiantes.",
+      image: {
+        src: "/Isipp_imagenes/alumnos_posando.jpg",
+        alt: "Alumnos en aulas ampliadas"
+      }
+    },
+    {
+      year: "2013",
+      title: "Nuevas carreras",
+      description: "Incorporamos las carreras de Administración de Redes informáticas y Analista de Sistemas de Computación, expandiendo nuestra oferta educativa.",
+      image: {
+        src: "/Isipp_imagenes/isipp5.jpg",
+        alt: "Inauguración de nuevas carreras"
+      }
+    },
+    {
+      year: "2024",
+      title: "Expansión educativa",
+      description: "Lanzamos la carrera de Seguridad e Higiene Laboral, respondiendo a las necesidades del mercado laboral actual.",
+      image: {
+        src: "/Isipp_imagenes/alumnos_higiene.jpeg",
+        alt: "Nueva carrera de Seguridad e Higiene"
+      }
+    }
+  ]}
+/>
+
 
         <Footer />
       </motion.div>

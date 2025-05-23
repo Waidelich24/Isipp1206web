@@ -18,7 +18,7 @@ export default function SeguridadInfoSection({ className }: SeguridadInfoSection
           {/* Contenido principal */}
           <div className="w-full md:w-1/2 text-primary-foreground dark:text-primary-dark-foreground text-center md:text-left mx-auto max-w-2xl">
             <h2 className="text-4xl font-bold mb-6 text-primary">
-              Técnico en Higiene y Seguridad Laboral
+              Técnico Superior en Higiene y Seguridad Laboral
             </h2>
             <p className="text-lg mb-8 leading-relaxed text-muted-foreground">
               La carrera te capacita para identificar, evaluar y controlar riesgos laborales, 
