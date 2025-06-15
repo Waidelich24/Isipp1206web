@@ -59,20 +59,11 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="/#inscripciones"
-                  onClick={(e) => handleLinkClick(e, "inscripciones")}
+                  href="/#formularios"
+                  onClick={(e) => handleLinkClick(e, "formularios")}
                   className="text-muted-foreground transition-colors hover:text-primary hover:underline cursor-pointer"
                 >
                   Inscripciones
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/#institucional"
-                  onClick={(e) => handleLinkClick(e, "institucional")}
-                  className="text-muted-foreground transition-colors hover:text-primary hover:underline cursor-pointer"
-                >
-                  Institucional
                 </a>
               </li>
               <li>

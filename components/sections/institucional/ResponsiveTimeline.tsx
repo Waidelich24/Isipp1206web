@@ -41,5 +41,6 @@ export function ResponsiveTimeline({ events, id, className }: ResponsiveTimeline
     <VerticalTimeline events={events} id={id} className={className} />
   ) : (
     <HorizontalTimeline events={events} id={id} className={className} />
+    
   )
 }

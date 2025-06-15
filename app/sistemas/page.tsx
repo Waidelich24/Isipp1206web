@@ -2,16 +2,13 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-
-// Importaciones corregidas
 import { Header } from "@/components/header";
 import SocialBubble from "@/components/SocialBubble";
 import AnalistaInfoSection from "@/components/sections/analista/AnalistaInfoSection";
 import AnalistaRequisitosVision from "@/components/sections/analista/requisito-vision-analista";
 import AnalistaScheduleFragment from "@/components/sections/analista/AnalistaScheduleFragment";
-import CorrelativasVisual from "@/components/CorrelativasVisual";
+import CorrelativasVisual from "@/components/correlativas/CorrelativasVisual";
 import { Footer } from "@/components/footer";
-
 
 export default function AnalistaPage() {
   const heroRef = useRef<HTMLElement>(null);
@@ -22,6 +19,10 @@ export default function AnalistaPage() {
 
   const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
+
+  // Texto dividido para animación letra por letra
+  const titleText = "Analista en Sistemas y Computación";
+  const letters = titleText.split("");
 
   return (
     <motion.div
@@ -56,13 +57,27 @@ export default function AnalistaPage() {
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-white px-4">
           <Header />
           <SocialBubble />
-          <h1 className="text-5xl font-bold text-center font-playfair glow-text-tight animate-pulse-intense">
-            Analista en Sistemas y Computación
-          </h1>
+
+          {/* Versión mejorada con animación letra por letra */}
+          <div className="text-center mb-8">
+            <h1 className="text-5xl font-bold font-playfair  mb-4">
+              {letters.map((letter, index) => (
+                <span 
+                  key={index} 
+                  className="letter-stroke-animation inline-block relative"
+                  style={{ animationDelay: `${index * 0.05}s` }}
+                >
+                  {letter === ' ' ? '\u00A0' : letter}
+                </span>
+              ))}
+            </h1>
+            <div className="w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-80 mt-2" />
+          </div>
+
         </div>
       </section>
 
-      {/* Secciones siguientes - Verifica que cada uno de estos componentes exista y se exporte correctamente */}
+      {/* Secciones siguientes */}
       <AnalistaInfoSection className="section-gradient-1" />
       <AnalistaRequisitosVision className="section-gradient-2 dark:bg-card" />
       <AnalistaScheduleFragment className="bg-background dark:bg-popover" />

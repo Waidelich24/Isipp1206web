@@ -5,8 +5,12 @@ export interface MateriaCorrelativa {
   anio: number;
   cuatrimestre: number;
   tipo: string;
-  correlativas: string[];
+  correlativas: {
+    regularizadas: string[];
+    aprobadas: string[];
+  };
 }
+
 
 export async function readCorrelativasFromExcel(carreraId: string): Promise<MateriaCorrelativa[]> {
   try {
@@ -47,7 +51,8 @@ const validCarreras = ['sistemas', 'redes', 'contabilidad', 'higiene'];
     }
 
     const header = rows[0] as string[];
-    const requiredColumns = ["Materia", "Año", "Cuatrimestre"];
+    const requiredColumns = ["Materia", "Año", "Cuatrimestre", "Regularizado", "Aprobado"];
+
     
     // Verificar columnas requeridas
     for (const col of requiredColumns) {
@@ -67,21 +72,36 @@ const validCarreras = ['sistemas', 'redes', 'contabilidad', 'higiene'];
         anio: Number(row[header.indexOf("Año")] || 0),
         cuatrimestre: row[header.indexOf("Cuatrimestre")] === '/' ? 0 : Number(row[header.indexOf("Cuatrimestre")] || 0),
         tipo: String(row[header.indexOf("Tipo")] || "Cuat").trim(),
-        correlativas: []
+        correlativas: {
+  regularizadas: [],
+  aprobadas: []
+}
+
       };
 
       if (!materia.materia) {
         console.warn(`Fila ${i + 1}: Materia sin nombre, omitiendo`);
         continue;
       }
+const regularizadoCell = row[header.indexOf("Regularizado")];
+const aprobadoCell = row[header.indexOf("Aprobado")];
 
-      const correlativasCell = row[header.indexOf("Correlativas")];
-      if (correlativasCell) {
-        materia.correlativas = String(correlativasCell)
-          .split(",")
-          .map(s => s.trim())
-          .filter(s => s.length > 0);
-      }
+const correlativasTexto = [regularizadoCell, aprobadoCell]
+  .filter(Boolean)
+  .map(cell => String(cell))
+  .join(",");
+
+materia.correlativas = {
+  regularizadas: String(regularizadoCell || '')
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean),
+  aprobadas: String(aprobadoCell || '')
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean),
+};
+
 
       materias.push(materia);
     }

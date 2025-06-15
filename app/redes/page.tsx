@@ -7,7 +7,7 @@ import SocialBubble from "@/components/SocialBubble";
 import RedesInfoSection from "@/components/sections/redes/RedesInfoSection";
 import RedesRequisitosVision from "@/components/sections/redes/requisitos-vision";
 import RedesScheduleFragment from "@/components/sections/redes/RedesScheduleFragment";
-import CorrelativasVisual from "@/components/CorrelativasVisual";
+import CorrelativasVisual from "@/components/correlativas/CorrelativasVisual";
 import { Footer } from "@/components/footer";
 
 export default function RedesPage() {

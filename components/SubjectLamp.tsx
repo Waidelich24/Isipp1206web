@@ -1,91 +1,68 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 
 interface SubjectLampProps {
   subjectName: string;
   isOn: boolean;
+  isRegular: boolean;
   isSemiOn: boolean;
-  isEnabled: boolean;
-  isDisabled: boolean;
   onToggle: (name: string) => void;
-  dependencies: string[];
   cableColor: string;
   highlight: boolean;
   isAnimating: boolean;
-  onFindRootDependency: (subject: string) => void;
   className?: string;
+  highlightApproved?: boolean;
+  highlightRegular?: boolean;
+  
+
 }
 
 const SubjectLamp: React.FC<SubjectLampProps> = ({
   subjectName,
   isOn,
+  isRegular,
   isSemiOn,
-  isEnabled,
-  isDisabled,
   onToggle,
-  dependencies,
   cableColor,
   highlight,
   isAnimating,
-  onFindRootDependency,
   className = "",
+  highlightApproved = false,
+  highlightRegular = false,
+  
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
   const animationRef = useRef<NodeJS.Timeout>();
-
-  // Limpieza de timeouts
-  useEffect(() => {
-    return () => {
-      if (animationRef.current) clearTimeout(animationRef.current);
-    };
-  }, []);
+  const lastClickTime = useRef(0);
 
   const handleClick = () => {
-    if (isAnimating || isProcessing) return;
+    const now = Date.now();
+    if (isAnimating || now - lastClickTime.current < 300) return;
     
-    setIsProcessing(true);
-    
-    // Lógica mejorada de manejo de clicks
-    if (isOn) {
-      // Si está encendida, permitir apagar
-      onToggle(subjectName);
-    } else if (isSemiOn && isEnabled) {
-      // Solo permitir encender si está semi-activa Y habilitada
-      onToggle(subjectName);
-    } else if (!isDisabled) {
-      // Mostrar correlativas faltantes
-      onFindRootDependency(subjectName);
-    }
-
-    // Resetear el estado de procesamiento después de un breve delay
-    animationRef.current = setTimeout(() => {
-      setIsProcessing(false);
-    }, 300);
+    lastClickTime.current = now;
+    onToggle(subjectName);
   };
 
-  const canInteract = (isOn || (isSemiOn && isEnabled) || (!isDisabled && onFindRootDependency)) && !isAnimating;
+const canInteract = !isAnimating;
 
-  // Sistema de colores mejorado
-  const getGlowColor = () => {
-    if (highlight) return "rgba(220, 38, 38, 0.7)"; // Rojo para destacar
-    if (isOn) return "rgba(74, 222, 128, 0.7)"; // Verde para aprobadas
-    if (isSemiOn) return "rgba(250, 204, 21, 0.5)"; // Amarillo para disponibles
-    return "transparent";
-  };
+
+const getGlowColor = () => {
+  if (highlightApproved) return "rgba(74, 222, 128, 0.7)"; // verde
+  if (highlightRegular) return "rgba(147, 197, 253, 0.7)"; // azul
+  if (highlight && !highlightApproved && !highlightRegular) return "rgba(220, 38, 38, 0.5)"; // rojo suave solo si no hay otros
+  if (isOn) return "rgba(74, 222, 128, 0.7)";
+  if (isSemiOn) return "rgba(250, 204, 21, 0.5)";
+  if (isRegular) return "rgba(147, 197, 253, 0.4)";
+  return "rgba(0, 0, 0, 0)";
+};
+
 
   const getBulbImage = () => {
     if (isOn) return "/bulb-on.png";
+    if (isRegular) return "/bulb-regular.png";
     if (isSemiOn) return "/bulb-semi.png";
     return "/bulb-off.png";
-  };
-
-  const getTextColor = () => {
-    if (highlight) return "#ef4444";
-    if (isOn) return "#4ade80";
-    if (isSemiOn) return "#facc15";
-    return "#9ca3af";
   };
 
   return (
@@ -95,67 +72,52 @@ const SubjectLamp: React.FC<SubjectLampProps> = ({
         scale: canInteract ? 1.05 : 1,
         cursor: canInteract ? "pointer" : "not-allowed",
       }}
-      onHoverStart={() => !isAnimating && setIsHovered(true)}
+      onHoverStart={() => canInteract && setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       onClick={handleClick}
     >
-      {/* Cable superior */}
+      {/* Cable */}
       <motion.div
         className="w-[2px] h-6 mb-1"
         style={{
           backgroundColor: cableColor,
-          opacity: isOn ? 1 : isSemiOn ? 0.7 : 0.4
+          opacity: isOn ? 1 : isSemiOn ? 0.7 : isRegular ? 0.5 : 0.4,
         }}
       />
 
       {/* Glow */}
-      <motion.div
-        className={`
-          absolute rounded-full blur-xl 
-          w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] md:w-[90px] md:h-[90px]
-        `}
-        animate={{
-          opacity: highlight || isOn || isSemiOn ? 1 : 0,
-          backgroundColor: getGlowColor(),
-          scale: highlight ? [1, 1.1, 1] : isHovered && canInteract ? 1.05 : 1,
-        }}
-        transition={{
-          duration: highlight ? 0.8 : 0.3,
-          repeat: highlight ? Infinity : 0,
-        }}
-        style={{ zIndex: -1 }}
-      />
+<motion.div
+  className="absolute rounded-full blur-xl w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] md:w-[90px] md:h-[90px]"
+ animate={{
+    opacity: highlightApproved || highlightRegular || isOn || isSemiOn || isRegular ? 1 : 0,
+    backgroundColor: getGlowColor(),
+    scale: isHovered && canInteract ? 1.05 : 1,
+  }}
+  transition={{
+    duration: highlightApproved || highlightRegular ? 0.6 : 0.3,
+    repeat: highlightApproved || highlightRegular ? Infinity : 0,
+    repeatType: "reverse",
+  }}
+  style={{ zIndex: -1 }}
+/>
+
 
       {/* Bulb */}
       <motion.img
         src={getBulbImage()}
         alt={`${subjectName}`}
-        className={`
-          h-auto transition-all duration-200
-          w-[35px] sm:w-[65px] md:w-[75px]
-        `}
+        className="h-auto transition-all duration-200 w-[35px] sm:w-[65px] md:w-[75px]"
         animate={{
-          opacity: isOn ? 1 : isSemiOn ? 0.8 : 0.6,
-          scale: isOn ? 1 : isSemiOn ? 0.98 : 0.95,
-          filter: isOn ? "brightness(1.1)" : isSemiOn ? "brightness(0.9)" : "brightness(0.7)",
+          opacity: isOn ? 1 : isSemiOn ? 0.8 : isRegular ? 0.7 : 0.6,
+          scale: isOn ? 1 : isSemiOn ? 0.98 : isRegular ? 0.96 : 0.95,
         }}
       />
 
-      {/* Subject text */}
+      {/* Nombre de la materia */}
       <motion.div
-        className={`
-          mt-2 px-2 py-1 text-xs text-center 
-          whitespace-normal font-medium rounded
-          max-w-[100px] min-w-[80px]
-          sm:text-sm sm:max-w-[120px] sm:min-w-[100px]
-          ${highlight ? "bg-red-500/10" : ""}
-        `}
-        style={{
-          color: getTextColor(),
-          textShadow: highlight ? "0 0 8px rgba(239, 68, 68, 0.7)" : 
-                         isOn ? "0 0 8px rgba(74, 222, 128, 0.5)" : 
-                         isSemiOn ? "0 0 4px rgba(250, 204, 21, 0.5)" : "none"
-        }}
+        className={`mt-2 px-2 py-1 text-xs text-center whitespace-normal font-medium rounded max-w-[100px] min-w-[80px] sm:text-sm sm:max-w-[120px] sm:min-w-[100px] ${
+          highlight ? "bg-red-500/10" : ""
+        }`}
       >
         {subjectName}
       </motion.div>

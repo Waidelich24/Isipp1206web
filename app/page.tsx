@@ -12,8 +12,11 @@ import { MapSection } from "@/components/map-section"
 import { FlipCard } from "@/components/flip-card"
 import { useSmoothScroll } from "@/hooks/use-smooth-scroll"
 import SocialBubble from '@/components/SocialBubble'; // Ajusta la ruta si es necesario
-import { ResponsiveTimeline } from '@/components/sections/timegalery/ResponsiveTimeline'
+import {FormulariosInscripcion} from "@/components/sections/ExamnSection/ExamEnrollmentSection";
+
 import { Chatbot } from '@/components/chatbot/chatbot';
+import { MapPin, Mail, Phone, Clock, ExternalLink } from 'lucide-react';
+
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollToSection } = useSmoothScroll()
@@ -230,46 +233,151 @@ export default function Home() {
             </div>
           </div>
         </motion.section>
+<motion.section
+  id="formularios"
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
+  viewport={{ once: true }}
+>
+  <FormulariosInscripcion />
+</motion.section>
 
+<motion.section
+  id="contacto"
+  className="relative py-28 bg-zinc-50 dark:bg-zinc-900 from-blue-50 to-indigo-50 dark:from-zinc-800 dark:to-zinc-900 overflow-hidden"
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, margin: "-100px" }}
+  variants={sectionVariants}
+>
+  <div className="container px-4 md:px-6 relative z-10">
+    {/* Encabezado */}
+    <motion.div 
+      className="mx-auto max-w-2xl text-center mb-16"
+      variants={itemVariants}
+    >
+      <div className="inline-flex items-center justify-center mb-4">
+        <div className="w-8 h-0.5 bg-primary mr-3"></div>
+        <span className="text-sm font-medium tracking-wider text-primary uppercase">
+          Contacto
+        </span>
+        <div className="w-8 h-0.5 bg-primary ml-3"></div>
+      </div>
+      <h2 className="font-playfair text-4xl font-bold tracking-tight md:text-5xl text-gray-900 dark:text-white">
+        Estamos aquí para ayudarte
+      </h2>
+      <p className="mt-4 text-lg text-muted-foreground dark:text-gray-300">
+        Completá el formulario o visitanos en nuestro instituto
+      </p>
+    </motion.div>
 
+    {/* Formulario y Mapa */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+      {/* Formulario */}
+      <motion.div
+        className="bg-white dark:bg-zinc-800 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300"
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
+        <ContactForm />
+      </motion.div>
 
+      {/* Mapa */}
+      <motion.div
+        className="relative h-full min-h-[400px] lg:min-h-[500px] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
+        initial={{ opacity: 0, x: 20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        viewport={{ once: true }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent z-10 pointer-events-none"></div>
+        
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1501.6705839486633!2d-54.713887003227875!3d-26.46879089974918!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94f776cc76399bb3%3A0xc081815410428ef3!2sInstituto%20Superior%20de%20Inform%C3%A1tica%20Cod.1206!5e0!3m2!1ses-419!2sar!4v1749856000154!5m2!1ses-419!2sar"
+          width="100%"
+          height="100%"
+          className="absolute inset-0"
+          style={{ border: 0 }}
+          allowFullScreen={true}
+          loading="lazy"
+          aria-hidden="false"
+          tabIndex={0}
+        ></iframe>
 
-        {/* Registration Form Section */}
-        <motion.section
-          id="inscripciones"
-          className="section-gradient-1 py-24 dark:bg-zinc-800"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={sectionVariants}
+        <a
+          href="https://www.google.com/maps/place/ISIPP+1206"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute bottom-6 right-6 z-20 inline-flex items-center px-4 py-2 bg-white dark:bg-zinc-800 text-primary dark:text-white rounded-lg shadow-md hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors"
         >
-          <div className="container px-4 md:px-6">
-            <motion.div className="mx-auto max-w-2xl text-center" variants={itemVariants}>
-              <h2 className="font-playfair text-3xl font-bold tracking-tight md:text-4xl text-primary">
-                Consultá tu duda
-              </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Completá el formulario para recibir más información sobre nuestras carreras
-              </p>
-            </motion.div>
+          <ExternalLink className="w-4 h-4 mr-2" />
+          <span className="text-sm font-medium">Abrir en Maps</span>
+        </a>
+      </motion.div>
+    </div>
 
-            <div className="mx-auto mt-12 max-w-md">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-              >
-                <ContactForm />
-              </motion.div>
-            </div>
-          </div>
-        </motion.section>
+    {/* Información de contacto */}
+    <motion.div
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+    >
+      {/* Dirección */}
+      <div className="flex items-start space-x-3">
+        <div className="flex-shrink-0 bg-primary/10 dark:bg-primary/20 p-2 rounded-lg">
+          <MapPin className="w-5 h-5 text-primary dark:text-white" />
+        </div>
+        <div>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Dirección</p>
+          <p className="text-gray-900 dark:text-white">Calle Juan Manuel de Rosas, Puerto Piray, Misiones, Argentina</p>
+        </div>
+      </div>
 
-        {/* Map Section */}
-        <section id="contacto">
-          <MapSection />
-        </section>
+      {/* Email */}
+      <div className="flex items-start space-x-3">
+        <div className="flex-shrink-0 bg-primary/10 dark:bg-primary/20 p-2 rounded-lg">
+          <Mail className="w-5 h-5 text-primary dark:text-white" />
+        </div>
+        <div>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Email</p>
+          <a href="mailto:info@isipp1206.edu.ar" className="text-gray-900 dark:text-white hover:underline">
+            info@isipp1206.edu.ar
+          </a>
+        </div>
+      </div>
+
+      {/* Teléfono */}
+      <div className="flex items-start space-x-3">
+        <div className="flex-shrink-0 bg-primary/10 dark:bg-primary/20 p-2 rounded-lg">
+          <Phone className="w-5 h-5 text-primary dark:text-white" />
+        </div>
+        <div>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Teléfono</p>
+          <a href="tel:+543751444222" className="text-gray-900 dark:text-white hover:underline">
+            +54 3751 444222
+          </a>
+        </div>
+      </div>
+
+      {/* Horario */}
+      <div className="flex items-start space-x-3">
+        <div className="flex-shrink-0 bg-primary/10 dark:bg-primary/20 p-2 rounded-lg">
+          <Clock className="w-5 h-5 text-primary dark:text-white" />
+        </div>
+        <div>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Horario</p>
+          <p className="text-gray-900 dark:text-white">Lun-Vie: 8-20hs</p>
+          <p className="text-gray-900 dark:text-white">Sáb: 9-13hs</p>
+        </div>
+      </div>
+    </motion.div>
+  </div>
+</motion.section>
 
         {/* CTA Section */}
         <motion.section
@@ -307,7 +415,7 @@ export default function Home() {
                   <Button
                     size="lg"
                     className="bg-white text-primary hover:bg-white/90 glow-border"
-                    onClick={() => scrollToSection("inscripciones")}
+                    onClick={() => scrollToSection("contacto")}
                   >
                     Contacto
                   </Button>
@@ -319,56 +427,7 @@ export default function Home() {
 
     
 
-<ResponsiveTimeline
-  id="historia-horizontal"
-  events={[
-    {
-      year: "1988-1989",
-      title: "Fundación del Instituto",
-      description: "El Instituto tuvo sus inicios en 1988 de forma experimental y fue oficialmente reconocido en 1989 por el Consejo General de Educación (CGE) como una institución privada adscripta teniendo a José Luis Farruggia como el primer directivo.",
-      image: {
-        src: "/Isipp_imagenes/fundacion.jpg",
-        alt: "Edificio original del instituto"
-      }
-    },
-    {
-      year: "1993",
-      title: "Cambio de dependencia",
-      description: "Pasó a depender del Servicio Provincial de Enseñanza Privada de Misiones (SPEPM), marcando un nuevo capítulo en nuestra administración.",
-      image: {
-        src: "/Isipp_imagenes/primeros_alumnos.jpg",
-        alt: "Documento de cambio de dependencia"
-      }
-    },
-    {
-      year: "1997",
-      title: "Ampliación de la carrera",
-      description: "Se amplió la duración de la carrera principal a 3 años, permitiendo una formación más completa y especializada para nuestros estudiantes.",
-      image: {
-        src: "/Isipp_imagenes/alumnos_posando.jpg",
-        alt: "Alumnos en aulas ampliadas"
-      }
-    },
-    {
-      year: "2013",
-      title: "Nuevas carreras",
-      description: "Incorporamos las carreras de Administración de Redes informáticas y Analista de Sistemas de Computación, expandiendo nuestra oferta educativa.",
-      image: {
-        src: "/Isipp_imagenes/isipp5.jpg",
-        alt: "Inauguración de nuevas carreras"
-      }
-    },
-    {
-      year: "2024",
-      title: "Expansión educativa",
-      description: "Lanzamos la carrera de Seguridad e Higiene Laboral, respondiendo a las necesidades del mercado laboral actual.",
-      image: {
-        src: "/Isipp_imagenes/alumnos_higiene.jpeg",
-        alt: "Nueva carrera de Seguridad e Higiene"
-      }
-    }
-  ]}
-/>
+
 
 
         <Footer />

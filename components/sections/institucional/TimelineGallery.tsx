@@ -30,11 +30,14 @@ export function HorizontalTimeline({ events, id, className }: HorizontalTimeline
     <section
       id={id}
       ref={containerRef}
-      className={cn("relative py-8 bg-background text-foreground", className)}
+      className={cn("relative py-28 bg-gradient-to-br from-primary/5 via-white to-primary/10 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900", className)}
     >
-      <div className="container px-4 mx-auto">
+
+      <div className="w-full relative z-10">
+
+
         <motion.h2
-          className="font-playfair text-2xl font-bold text-center mb-8 text-primary"
+          className="font-playfair text-4xl font-bold text-center mb-16 text-gray-900 dark:text-white"
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -42,9 +45,9 @@ export function HorizontalTimeline({ events, id, className }: HorizontalTimeline
         >
           Nuestra Historia
         </motion.h2>
+<div className="relative w-full overflow-x-auto pb-12">
+  <div className="flex items-start space-x-8 w-[max-content] h-[800px] px-8">
 
-        <div className="relative overflow-x-auto pb-12">
-          <div className="relative flex items-start space-x-1 px-4 min-w-max h-[650px]">
             {/* Línea horizontal central */}
             <motion.div
               className="absolute left-0 right-0 top-1/2 h-px bg-gradient-to-r from-transparent via-primary/80 to-transparent transform -translate-y-1/2 z-0"
@@ -121,11 +124,11 @@ export function HorizontalTimeline({ events, id, className }: HorizontalTimeline
   )
 }
 
-// Componente de tarjeta adaptado a variables CSS
+// Componente de tarjeta con nuevos colores
 function TimelineCard({ event, isActive }: { event: TimelineEvent, isActive: boolean }) {
   return (
-    <div className="relative bg-card text-card-foreground shadow-md rounded-md overflow-hidden p-3 flex flex-col h-[350px] w-[240px] border-l-2 border-primary">
-      <div className="flex flex-col gap-1 mb-2">
+    <div className="relative bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-lg rounded-xl overflow-hidden p-4 flex flex-col h-[350px] w-[240px] border-l-4 border-primary hover:shadow-xl transition-shadow duration-300">
+      <div className="flex flex-col gap-1 mb-3">
         <span className="text-md font-bold text-primary leading-tight">
           {event.year}
         </span>
@@ -133,11 +136,11 @@ function TimelineCard({ event, isActive }: { event: TimelineEvent, isActive: boo
           {event.title}
         </h3>
       </div>
-      <p className="text-muted-foreground text-xs mb-3 line-clamp-4 flex-grow">
+      <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-4 flex-grow">
         {event.description}
       </p>
       {event.image && (
-        <div className="relative aspect-[4/3] rounded-sm overflow-hidden mt-auto">
+        <div className="relative aspect-[4/3] rounded-md overflow-hidden mt-auto">
           <Image
             src={event.image.src}
             alt={event.image.alt}

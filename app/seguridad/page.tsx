@@ -7,7 +7,7 @@ import SocialBubble from "@/components/SocialBubble";
 import SeguridadInfoSection from "@/components/sections/seguridad/SeguridadInfoSection";
 import SeguridadRequisitosVision from "@/components/sections/seguridad/requisitos-vision";
 import SeguridadScheduleFragment from "@/components/sections/seguridad/SeguridadScheduleFragment";
-import CorrelativasVisual from "@/components/CorrelativasVisual";
+import CorrelativasVisual from "@/components/correlativas/CorrelativasVisual";
 import { Footer } from "@/components/footer";
 
 export default function SeguridadPage() {
