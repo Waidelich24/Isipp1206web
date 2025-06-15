@@ -73,6 +73,10 @@
     @apply bg-background text-foreground;
   }
 
+  html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Altura de tu header */
+}
   .font-playfair {
     font-family: var(--font-playfair);
   }

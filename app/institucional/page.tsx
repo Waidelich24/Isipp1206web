@@ -6,6 +6,8 @@ import { ResponsiveTimeline } from '@/components/sections/institucional/Responsi
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import SocialBubble from '@/components/SocialBubble';
+import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
+import { useEffect } from "react";
 
 const timelineEvents = [
   {
@@ -56,20 +58,60 @@ const timelineEvents = [
 ];
 
 export default function InstitucionalPage() {
+  const { scrollToSection } = useSmoothScroll();
+
+  useEffect(() => {
+    const handleNavigation = () => {
+      const { hash } = window.location;
+      if (hash) {
+        const sectionId = hash.substring(1);
+        setTimeout(() => {
+          scrollToSection(sectionId);
+        }, 100);
+      }
+    };
+
+    // Manejar navegación inicial
+    handleNavigation();
+
+    // Manejar cambios de hash
+    window.addEventListener('hashchange', handleNavigation);
+
+    return () => {
+      window.removeEventListener('hashchange', handleNavigation);
+    };
+  }, [scrollToSection]);
+
+  // Interceptar clicks para navegación completa
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a[href^="#"]');
+      
+      if (anchor) {
+        e.preventDefault();
+        const hash = anchor.getAttribute('href');
+        if (hash) {
+          // Navegación completa a /institucional#seccion
+          window.location.href = `/institucional${hash}`;
+        }
+      }
+    };
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-primary/5 via-white to-primary/10 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900">
-      {/* Header con navegación */}
       <Header />
-      
-      {/* Botones flotantes de redes sociales */}
       <SocialBubble />
       
-      {/* Contenido principal con secciones navegables */}
       <main className="flex-grow w-full">
-        {/* Sección Hero - Punto de anclaje "inicio" */}
+        {/* Sección Hero */}
         <section 
           id="inicio" 
-          className="w-full bg-gradient-to-r from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10 py-24 scroll-mt-20"
+          className="w-full bg-gradient-to-r from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10 py-24 scroll-mt-[80px]"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
@@ -81,18 +123,18 @@ export default function InstitucionalPage() {
           </div>
         </section>
         
-        {/* Sección Visión y Misión - Punto de anclaje "mision-vision" */}
+        {/* Sección Visión y Misión */}
         <section 
-          id="mision-vision" 
-          className="scroll-mt-20"
+          id="mision-vision"
+          className="py-20 scroll-mt-[80px]"
         >
           <VisionYMision />
         </section>
         
-        {/* Sección Historia - Timeline - Punto de anclaje "historia" */}
+        {/* Sección Historia */}
         <section 
-          id="historia" 
-          className="w-full py-16 bg-gradient-to-br from-primary/5 via-white to-primary/10 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900 scroll-mt-20"
+          id="historia"
+          className="w-full py-20 bg-gradient-to-br from-primary/5 via-white to-primary/10 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900 scroll-mt-[80px]"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
@@ -105,18 +147,17 @@ export default function InstitucionalPage() {
             />
           </div>
         </section>
+        
+        {/* Sección Desarrollado por */}
+        <section 
+          id="desarrollado-por"
+          className="py-20 scroll-mt-[80px]"
+        >
+          <DesarrolladoPor />
+        </section>
       </main>
       
-      {/* Sección Desarrollado por - Punto de anclaje "desarrollado-por" */}
-      <section 
-        id="desarrollado-por" 
-        className="scroll-mt-20"
-      >
-        <DesarrolladoPor />
-      </section>
-      
-      {/* Footer */}
       <Footer />
     </div>
-  )
+  );
 }

@@ -1,12 +1,11 @@
 "use client"
 
-import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Menu, ChevronDown } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -24,22 +23,21 @@ type NavItem = {
   }[]
 }
 
-type HeaderProps = {}
+type HeaderProps = {
+  forceDark?: boolean
+}
 
-export function Header({}: HeaderProps) {
+export function Header({ forceDark = false }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const { scrollToSection } = useSmoothScroll()
   const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true)
-      } else {
-        setIsScrolled(false)
-      }
+      setIsScrolled(window.scrollY > 10)
     }
 
     window.addEventListener("scroll", handleScroll)
@@ -59,26 +57,34 @@ export function Header({}: HeaderProps) {
     }, 150)
   }
 
-  const handleNavClick = (e: React.MouseEvent, href: string, sectionId?: string, action?: () => void) => {
-    e.preventDefault()
-    setActiveDropdown(null)
-    
-    if (action) {
-      action()
-      return
-    }
-
-    if (sectionId) {
-      if (href === "#") {
-        scrollToSection(sectionId)
-      } else {
-        router.push(`${href}#${sectionId}`)
-      }
-    } else {
-      router.push(href)
-    }
+// En la función handleNavClick del Header:
+const handleNavClick = (e: React.MouseEvent, href: string, sectionId?: string, action?: () => void) => {
+  e.preventDefault();
+  setActiveDropdown(null);
+  
+  if (action) {
+    action();
+    return;
   }
 
+  if (sectionId) {
+    if (href === "#") {
+      // Scroll interno en la misma página
+      scrollToSection(sectionId);
+    } else if (pathname === href.split('#')[0]) {
+      // Misma página, diferente hash
+      scrollToSection(sectionId);
+      
+      // Forzar actualización si ya está en la misma página
+      window.dispatchEvent(new CustomEvent('hashChanged'));
+    } else {
+      // Navegación a otra página
+      router.push(`${href}#${sectionId}`);
+    }
+  } else {
+    router.push(href);
+  }
+}
   // Variantes de animación
   const menuItemVariants = {
     initial: { opacity: 0, y: -5 },
@@ -133,30 +139,33 @@ export function Header({}: HeaderProps) {
       href: "/institucional", 
       children: [
         {
-          label: "Mision Y Vision",
+          label: "Misión y Visión",
           href: "/institucional#mision-vision",
-          description: "Conocenos y a nuestros logros",
-          action: () => scrollToSection("/institucional#mision-vision")
+          description: "Conoce nuestras metas a futuro",
+          action: () => scrollToSection("mision-vision")
         },
         {
           label: "Historia",
           href: "/institucional#historia",
-          description: "Nuestra trayectoria"
+          description: "La historia detras de esta institucion",
+          action: () => scrollToSection("historia")
         },
         {
           label: "Desarrollado Por",
           href: "/institucional#desarrollado-por",
-          description: "Conoce a los desarrolladores detras"
+          description: "Quienes fueron los creadores de este sitio",
+          action: () => scrollToSection("desarrollado-por")
         }
       ]
     }
   ]
 
+  const textColorClass = forceDark ? "text-white" : (isScrolled ? "text-white" : "text-white")
+  const bgClass = forceDark ? "bg-zinc-900/90" : (isScrolled ? "bg-zinc-900/90" : "bg-transparent")
+
   return (
     <motion.header
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-        isScrolled ? "bg-zinc-900/90 py-2 shadow-md backdrop-blur-sm" : "bg-transparent py-4"
-      }`}
+      className={`fixed top-0 z-50 w-full transition-all duration-300 ${bgClass} py-4 ${isScrolled ? "shadow-md backdrop-blur-sm py-2" : ""}`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
@@ -171,10 +180,11 @@ export function Header({}: HeaderProps) {
               width={60}
               height={60}
               className="h-14 w-auto"
+              priority
             />
             <div className="ml-3">
-              <h1 className="text-lg font-bold text-white leading-tight">Instituto Superior de Informática</h1>
-              <p className="text-xs text-white/80">Puerto Piray, Misiones</p>
+              <h1 className={`text-lg font-bold ${textColorClass} leading-tight`}>Instituto Superior de Informática</h1>
+              <p className={`text-xs ${textColorClass}/80`}>Puerto Piray, Misiones</p>
             </div>
           </Link>
         </motion.div>
@@ -196,9 +206,7 @@ export function Header({}: HeaderProps) {
               <motion.a
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href, item.sectionId)}
-                className={`flex items-center font-medium transition-colors hover:text-primary ${
-                  isScrolled ? "text-white" : "text-white"
-                } ${activeDropdown === item.label ? "text-primary" : ""}`}
+                className={`flex items-center font-medium transition-colors hover:text-primary ${textColorClass} ${activeDropdown === item.label ? "text-primary" : ""}`}
                 whileHover={{ scale: 1.05 }}
               >
                 {item.label}
@@ -226,7 +234,7 @@ export function Header({}: HeaderProps) {
                           <motion.a
                             key={child.label}
                             href={child.href}
-                            onClick={(e) => handleNavClick(e, child.href)}
+                            onClick={(e) => child.action ? child.action() : handleNavClick(e, child.href)}
                             className="block rounded-md px-3 py-2 text-sm text-zinc-800 hover:bg-zinc-100 dark:text-white dark:hover:bg-zinc-700"
                             variants={dropdownItemVariants}
                             custom={childIndex}
@@ -263,7 +271,7 @@ export function Header({}: HeaderProps) {
           <ThemeToggle />
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-white">
+              <Button variant="ghost" size="icon" className={textColorClass}>
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Toggle menu</span>
               </Button>
@@ -281,24 +289,24 @@ export function Header({}: HeaderProps) {
               <div className="flex flex-col space-y-4">
                 {navItems.map((item) => (
                   <div key={item.label} className="space-y-2">
-                    <a
-                      href={item.href}
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start px-0 text-lg font-medium hover:text-primary"
                       onClick={(e) => handleNavClick(e, item.href, item.sectionId)}
-                      className="block py-2 text-lg font-medium hover:text-primary"
                     >
                       {item.label}
-                    </a>
+                    </Button>
                     {item.children && (
                       <div className="ml-4 space-y-2 border-l border-zinc-200 pl-4 dark:border-zinc-700">
                         {item.children.map((child) => (
-                          <a
+                          <Button
                             key={child.label}
-                            href={child.href}
-                            onClick={(e) => handleNavClick(e, child.href)}
-                            className="block py-1.5 text-sm text-zinc-600 hover:text-primary dark:text-zinc-300"
+                            variant="ghost"
+                            className="w-full justify-start px-0 py-1.5 text-sm text-zinc-600 hover:text-primary dark:text-zinc-300"
+                            onClick={(e) => child.action ? child.action() : handleNavClick(e, child.href)}
                           >
                             {child.label}
-                          </a>
+                          </Button>
                         ))}
                       </div>
                     )}

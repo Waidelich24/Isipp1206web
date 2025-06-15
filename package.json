@@ -63,6 +63,7 @@
     "react-xarrows": "^2.0.2",
     "recharts": "^2.15.3",
     "router": "^2.2.0",
+    "smoothscroll-polyfill": "^0.4.4",
     "sonner": "^1.7.1",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
