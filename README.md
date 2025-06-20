@@ -61,6 +61,19 @@ Colaboración abierta a estudiantes y docentes interesados en:
 
 ---
 
+## 👨‍💻 Desarrollo y créditos
+
+Proyecto iniciado y actualmente mantenido por **Angel Agustín Waidelich**.
+
+Este repositorio representa una evolución técnica y estructural basada en colaboraciones previas.
+
+Colaboraciones anteriores destacadas:
+- **Gabriel Agustín Torres** – Aportes iniciales en maquetado, organización del contenido base y primer despliegue del proyecto.
+
+Además, este proyecto reutiliza y adapta componentes del repositorio [shadcn/ui](https://github.com/shadcn-ui/ui), respetando su licencia MIT.
+
+---
+
 ## 📥 Instalación
 
 ```bash
